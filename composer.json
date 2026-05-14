@@ -1,0 +1,17 @@
+{
+  "name": "zvitotas/1250-composer",
+  "version": "1.0.0",
+  "description": "Projeto que busca os cursos no site da Alura",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Victor",
+      "email": "vitotas2011@gmail.com"
+    }
+  ],
+  "require": {
+    "guzzlehttp/guzzle": "^7.10",
+    "symfony/dom-crawler": "^v8.0.8",
+    "symfony/css-selector": "^8.0"
+  }
+}
