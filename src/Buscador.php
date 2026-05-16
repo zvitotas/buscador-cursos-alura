@@ -2,33 +2,40 @@
 
 namespace Alura\BuscadorDeCursos;
 
-use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
 use Symfony\Component\DomCrawler\Crawler;
 
 class Buscador
 {
-
     private $httpClient;
     private $crawler;
+
     public function __construct(ClientInterface $httpClient, Crawler $crawler)
     {
         $this->httpClient = $httpClient;
         $this->crawler = $crawler;
     }
+
     public function buscar(string $url): array
     {
-        $resposta = $this->httpClient->request('GET', 'https://alura.com.br/cursos-online-programacao/php');
+        $resposta = $this->httpClient->request('GET', $url);
 
         $html = $resposta->getBody();
 
-        $crawler = new Crawler();
-        $crawler->addHtmlContent($html);
+        $this->crawler->clear();
+        $this->crawler->addHtmlContent($html);
 
-        $ElementosCursos = $crawler->filter('span.card-curso__nome');
+        $elementosCursos = $this->crawler->filter('.card-curso__nome');
+
+        if (count($elementosCursos) === 0) {
+            $elementosCursos
+                = $this->crawler->filter('span.category-card__title, h4.card-curso__title, .card-curso__nome');
+        }
+
         $cursos = [];
 
-        foreach ($ElementosCursos as $elemento) {
-           $cursos[] = $elemento->textContent;
+        foreach ($elementosCursos as $elemento) {
+            $cursos[] = trim($elemento->textContent);
         }
 
         return $cursos;
