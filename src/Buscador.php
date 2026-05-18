@@ -20,7 +20,7 @@ class Buscador
     {
         $resposta = $this->httpClient->request('GET', $url);
 
-        $html = $resposta->getBody();
+        $html = (string) $resposta->getBody();
 
         $this->crawler->clear();
         $this->crawler->addHtmlContent($html);
@@ -33,9 +33,8 @@ class Buscador
         }
 
         $cursos = [];
-
         foreach ($elementosCursos as $elemento) {
-            $cursos[] = trim($elemento->textContent);
+            $cursos[] = $elemento->textContent;
         }
 
         return $cursos;
