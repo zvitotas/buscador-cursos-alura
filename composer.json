@@ -36,14 +36,18 @@
     "test": "phpunit tests\\TestBuscadorDeCursos.php",
     "cs": "phpcs --standard=PSR12 src/",
     "phan": "phan --allow-polyfill-parser",
-    "exibe-curso": "Namespace\\Da\\Classe::metodo",
     "check": [
       "@phan",
       "@cs",
       "@test"
+    ],
+    "post-update-cmd": [
+      "@test"
     ]
   },
   "scripts-descriptions": {
-    "check": "Roda as verificações do código. PHAN, PHPCS, E PHPUNIT"
-  }
+    "check": "Roda as verificações do código. PHAN, PHPCS e PHPUNIT"
+  },
+  "license": "GPL-3.0",
+  "bin": ["buscar-cursos.php"]
 }
